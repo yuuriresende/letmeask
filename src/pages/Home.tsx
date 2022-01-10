@@ -5,7 +5,24 @@ import googleIconImg from '../assets/images/google-icon.svg';
 import '../styles/auth.scss';
 import { Button } from '../components/Button';
 
+import { useNavigate } from 'react-router-dom';
+
+import { auth, firebase } from '../services/firebase'
+
 export function Home(){
+    const history = useNavigate();
+
+    function handleCreateRoom(){
+        const provider = new firebase.auth.GoogleAuthProvider
+
+        auth.signInWithPopup(provider).then(result => {
+            console.log(result)
+            history("/rooms/new")
+        } )
+
+       
+    }
+
     return(
         <div id="page-auth">
             <aside>
@@ -17,7 +34,7 @@ export function Home(){
                 <div className="main-content">
                     <img src={logoImg} alt="logo" />
                 
-                    <button className="create-room">
+                    <button onClick={handleCreateRoom} className="create-room">
                         <img src={googleIconImg} alt="imagem do google" />
                         crie sua sala com o Google
                     </button>
@@ -31,7 +48,7 @@ export function Home(){
                             Entrar na sala
                         </Button>
                     </form>
-                    <p>Quer entrar em uma sala existete? <a href="#">clique aqui</a></p>
+                    
                 </div>
             </main>
         </div>
