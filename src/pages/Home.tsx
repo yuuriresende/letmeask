@@ -1,9 +1,9 @@
-import illustraionImg from '../assets/images/illustration.svg'
-import logoImg from '../assets/images/logo.svg'
-import googleIconImg from '../assets/images/google-icon.svg'
+import illustraionImg from '../assets/images/illustration.svg';
+import logoImg from '../assets/images/logo.svg';
+import googleIconImg from '../assets/images/google-icon.svg';
 
-import '../styles/auth.scss'
-import { Button } from '../components/Button'
+import '../styles/auth.scss';
+import { Button } from '../components/Button';
 
 export function Home(){
     return(
@@ -28,8 +28,8 @@ export function Home(){
                         placeholder="digite o codigo de sala" 
                         />
                         <Button type="submit">
-                        Entrar na sala
-                    </Button>
+                            Entrar na sala
+                        </Button>
                     </form>
                     <p>Quer entrar em uma sala existete? <a href="#">clique aqui</a></p>
                 </div>

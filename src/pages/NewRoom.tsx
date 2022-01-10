@@ -1,7 +1,7 @@
-import '../styles/auth.scss'
-import illustraionImg from '../assets/images/illustration.svg'
-import logoImg from '../assets/images/logo.svg'
-import { Button } from '../components/Button'
+import '../styles/auth.scss';
+import illustraionImg from '../assets/images/illustration.svg';
+import logoImg from '../assets/images/logo.svg';
+import { Button } from '../components/Button';
 
 export function NewRoom(){
     return(
