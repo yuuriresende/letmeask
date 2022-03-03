@@ -9,18 +9,18 @@ import { useNavigate } from 'react-router-dom';
 
 import { auth, firebase } from '../services/firebase'
 
+import { useAuth } from '../hooks/userAuth';
+
+
 export function Home(){
     const history = useNavigate();
+    const { user, signInWithGoogle } = useAuth();
 
-    function handleCreateRoom(){
-        const provider = new firebase.auth.GoogleAuthProvider
-
-        auth.signInWithPopup(provider).then(result => {
-            console.log(result)
-            history("/rooms/new")
-        } )
-
-       
+    async function handleCreateRoom(){
+        if (!user){
+           await signInWithGoogle()
+        }
+            history("/rooms/new");            
     }
 
     return(
@@ -31,6 +31,7 @@ export function Home(){
                 <p>tire suas duvidas da audiencia em tempo real</p>
             </aside>
             <main>
+                {/* <h1>{value}</h1> */}
                 <div className="main-content">
                     <img src={logoImg} alt="logo" />
                 

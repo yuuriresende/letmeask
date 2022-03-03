@@ -4,8 +4,12 @@ import logoImg from '../assets/images/logo.svg';
 import { Button } from '../components/Button';
 
 import { Link } from 'react-router-dom';
+import { useAuth } from '../hooks/userAuth';
+
 
 export function NewRoom(){
+    const { user } = useAuth();
+
     return(
         <div id="page-auth">
             <aside>
@@ -14,9 +18,10 @@ export function NewRoom(){
                 <p>tire suas duvidas da audiencia em tempo real</p>
             </aside>
             <main>
+                <h1></h1>
                 <div className="main-content">
                     <img src={logoImg} alt="logo" />
-                
+                    <h1>{user?.name}</h1>
                    <h2>Criar uma nova sala</h2>
                     <form>
                         <input 

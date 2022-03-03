@@ -3,15 +3,20 @@ import {NewRoom} from './pages/NewRoom';
 
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
+import { AuthContextProvider } from './contexts/AuthContext'
+
 
 function App() {
+
   return (
     <div>
       <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-         <Route path="/rooms/new" element={<NewRoom />} />
-        </Routes>
+          <Routes>
+            <AuthContextProvider>
+            <Route path="/" element={<Home />} />
+            <Route path="/rooms/new" element={<NewRoom />} />
+            </AuthContextProvider>
+          </Routes>
       </BrowserRouter>
    </div>
   );
