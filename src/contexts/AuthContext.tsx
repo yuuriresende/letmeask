@@ -19,7 +19,8 @@ export const AuthContext = createContext({} as AuthContextType);
 
 export function AuthContextProvider(props: AuthContextProviderProps){
     const [user, setUser] = useState<User>();
-
+    
+    //observa se houve alguma alteração no estado de autenticação do usuario
     useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
         if (user){        
@@ -36,11 +37,13 @@ export function AuthContextProvider(props: AuthContextProviderProps){
             })         
         } 
       })
+     
       return () => {
         unsubscribe();
       }
+
     }, [])
-  
+    //login com o google pegando id, anome e avatar
     async function signInWithGoogle(){
       const provider = new firebase.auth.GoogleAuthProvider;
   
@@ -62,6 +65,7 @@ export function AuthContextProvider(props: AuthContextProviderProps){
      
     }
     return(
+      //contexto utilizando a tipagem do typescript para compartilhar informação
         <AuthContext.Provider value={{ user, signInWithGoogle }}>
             {props.children}
         </AuthContext.Provider>

@@ -7,22 +7,41 @@ import { Button } from '../components/Button';
 
 import { useNavigate } from 'react-router-dom';
 
-import { auth, firebase } from '../services/firebase'
+import { auth, database, firebase } from '../services/firebase'
 
 import { useAuth } from '../hooks/userAuth';
+import { FormEvent, useState } from 'react';
 
 
 export function Home(){
     const history = useNavigate();
     const { user, signInWithGoogle } = useAuth();
-
+    const [roomCode, setRoomCode] = useState('');
+    // verifica se tem uma pessoa logada, se nao abre o popup do google
+    // usando o await o codigo so abaixo dele so sera executado caso tenha recebido uma resposta de sucesso ou seja = fez o login corretamente
+    
     async function handleCreateRoom(){
         if (!user){
            await signInWithGoogle()
         }
-            history("/rooms/new");            
+            history("/rooms/new"); 
+            //essa rota so acontece se estiver autenticado de fato           
     }
+    async function handleJoinRoom(event: FormEvent){
+        event.preventDefault();
+        //previne o comportamento padrão de atualizar a pagina
+        if(roomCode.trim()=== ''){
+            return;
+        }
+        const roomRef = await database.ref(`rooms/${roomCode}`).get();
+        //busca todos dados dessa sala especifica
 
+        if(!roomRef.exists()){
+            alert('sala nao existe');
+            return;
+        }
+        history(`/rooms/${roomCode}`)
+    }
     return(
         <div id="page-auth">
             <aside>
@@ -40,10 +59,12 @@ export function Home(){
                         crie sua sala com o Google
                     </button>
                     <div className="separator">ou entre em uma sala</div>
-                    <form>
+                    <form onSubmit={handleJoinRoom}>
                         <input 
                         type="text"
-                        placeholder="digite o codigo de sala" 
+                        placeholder="digite o codigo de sala"
+                        onChange={event => setRoomCode(event.target.value)}
+                        value={roomCode}
                         />
                         <Button type="submit">
                             Entrar na sala
